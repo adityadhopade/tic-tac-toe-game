@@ -87,7 +87,15 @@ jobs:
         run: aws eks --region ap-south-1 update-kubeconfig --name EKS_CLOUD
 
       - name: Deploy to K8's
-        run: kubectl apply -f deployment-service.yml  
+        run: |
+          # Delete the existing deployment if it exists
+          if kubectl get deployment tic-tac-toe &>/dev/null; then
+            kubectl delete deployment tic-tac-toe
+            echo "Existing deployment removed"
+          fi
+          kubectl apply -f deployment-service.yml  
+          current_directory=$(pwd)
+          echo "Current directory is: $current_directory"
 
       - name: Slack Notification
         if: always()
@@ -104,9 +112,8 @@ jobs:
     runs-on: [eks-github-actions]
     steps:
 
-      - name: Destroy K8 Cluster
+      - name: Get current directory
         run: | 
-          kubectl delete -f deployment-service.yml
           current_directory=$(pwd)
           echo "Current directory is: $current_directory"
 
