@@ -16,7 +16,10 @@ jobs:
 
       - name: Initialize terraform
         working-directory: /home/ubuntu/tic-tac-toe-game/Eks-terraform
-        run: terraform init
+        run: |
+          current_directory=$(pwd)
+          echo "Current directory is: $current_directory"
+          terraform init
 
       - name: Plan Terraform
         run: terraform plan
