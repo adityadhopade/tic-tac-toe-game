@@ -107,12 +107,10 @@ jobs:
       - name: Destroy K8 Cluster
         run: | 
           kubectl delete -f deployment-service.yml
-          echo pwd
-          echo pwd
-          echo pwd
-          
+          current_directory=$(pwd)
+          echo "Current directory is: $current_directory"
 
-      # - name: Destroy Terraform build
-      #   run: |
-      #     terraform destroy --auto-approve
+      - name: Destroy Terraform build
+        run: |
+          terraform destroy --auto-approve
 
