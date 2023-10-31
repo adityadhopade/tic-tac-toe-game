@@ -7,7 +7,25 @@ on:
 
 
 jobs:
+  terraform-build:
+    name: Terraform initialization
+    runs-on: [eks-github-actions]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Initialize terraform
+        working-directory: /home/ubuntu/
+        run: terraform init
+
+      - name: Plan Terraform
+        run: terraform plan
+
+      - name: Apply Infrastructure 
+        run: terraform apply --auto-approve
+        
   build:
+    needs: [terraform-build]
     name: Build
     runs-on: [eks-github-actions]
     steps:
