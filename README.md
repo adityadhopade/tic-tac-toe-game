@@ -1,7 +1,5 @@
 <h1 align="center">TIC-TAC-TOE-GAME</h1>
 
-[![Build](https://github.com/adityadhopade/tic-tac-toe-game/actions/workflows/build.yml/badge.svg)](https://github.com/adityadhopade/tic-tac-toe-game/actions/workflows/build.yml)
-
 ### Workflow of the Tic-Tac-Toe Application
 ![TIC_TAC_TOE_using_GITHUB](https://github.com/adityadhopade/tic-tac-toe-game/assets/48392204/9a86367e-1331-460a-9c8d-037c60c48c4b)
 
