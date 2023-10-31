@@ -31,7 +31,7 @@ jobs:
       - name: Docker Build image
         run: |
           docker build -t tic-tac-toe-game .
-          docker tag adityadho/tic-tac-toe-game:latest
+          docker tag tic-tac-toe-game adityadho/tic-tac-toe-game:latest
           
         env:
           DOCKER_CLI_ACI: 1  
