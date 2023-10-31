@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Initialize terraform
-        working-directory: /tic-tac-toe-game/Eks-terraform
+        working-directory: /home/ubuntu/tic-tac-toe-game/Eks-terraform
         run: |
           current_directory=$(pwd)
           echo "Current directory is: $current_directory"
