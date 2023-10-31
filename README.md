@@ -1,4 +1,4 @@
-<h1 align="center">TIC-TAC-TOE-GAME</h1>
+<h2 align="center">CICD using GitHub Action TIC-TAC-TOE-GAME</h2>
 
 ### Workflow of the Tic-Tac-Toe Application
 ![TIC_TAC_TOE_using_GITHUB](https://github.com/adityadhopade/tic-tac-toe-game/assets/48392204/9a86367e-1331-460a-9c8d-037c60c48c4b)
