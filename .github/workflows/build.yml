@@ -60,10 +60,27 @@ jobs:
       - name: Scan image using Trivy
         run: trivy image adityadho/tic-tac-toe-game:latest > trivy_pull_image_scan.txt
 
-      - name: Deploy to container
+      - name: Check if container exists
+        id: check_container
+        run: |
+          if docker ps -a | grep game; then
+          echo "Container exists"
+          echo "::set-output name=container_exists::true"
+          else
+            echo "Container does not exist"
+            echo "::set-output name=container_exists::false"
+          fi
+        shell: bash  
+      
+      - name: Remove Container
+        if: steps.check_container.outputs.container_exists == 'true'
         run: |
           docker stop game
           docker rm game
+        shell: bash
+
+      - name: Deploy to container
+        run: |
           docker run -d --name game -p 3000:3000 adityadho/tic-tac-toe-game:latest  
 
       - name: Update Kubeconfig
@@ -86,10 +103,6 @@ jobs:
     needs: [build, deploy]
     runs-on: [eks-github-actions]
     steps:
-      - name: Destroy the Containers
-        run: |
-          docker stop game
-          docker rm game
 
       - name: Destroy K8 Cluster
         run: | 
