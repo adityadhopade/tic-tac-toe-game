@@ -100,11 +100,51 @@ cd Eks-terraform
 
 ![image](https://github.com/adityadhopade/tic-tac-toe-game/assets/48392204/3397b011-14f9-45b7-8b48-13ced4606f87)
 
+### Deploy to EKS
+```
+ - name: Update kubeconfig
+   run: aws eks --region <cluster-region> update-kubeconfig --name <cluster-name>
+```
+```
+  - name: Deploy to K8's
+    run: |
+      # Delete the existing deployment if it exists
+      if kubectl get deployment tic-tac-toe &>/dev/null; then
+        kubectl delete deployment tic-tac-toe
+        echo "Existing deployment removed"
+      fi
+
+
+      # Delete the existing service if it exists
+      if kubectl get service tic-tac-toe-service &>/dev/null; then
+        kubectl delete service tic-tac-toe-service
+        echo "Existing service removed"
+      fi
+
+      kubectl apply -f deployment-service.yml 
+
+      current_directory=$(pwd)
+      echo "Current directory is: $current_directory"
+```
+
 ### After implementation just remember to delete all the resources created
 ```
 Delete ec2 instance
 Delete iam role
 Delete github actions secrets
+```
+
+### For Slack Notification
+```
+name: Send a Slack Notification
+  if: always() # as we want it to run even if our job fails
+  uses: act10ns/slack@v1
+  with:
+    status: ${{ job.status }}
+    steps: ${{ toJson(steps) }}
+    channel: '#githubactions-eks' # your created Channel
+  env:
+    SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 ```
 
 ### Game Image
