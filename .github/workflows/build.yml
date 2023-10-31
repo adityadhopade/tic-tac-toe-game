@@ -61,7 +61,10 @@ jobs:
         run: trivy image adityadho/tic-tac-toe-game:latest > trivy_pull_image_scan.txt
 
       - name: Deploy to container
-        run: docker run -d --name game -p 3000:3000 adityadho/tic-tac-toe-game:latest  
+        run: |
+          docker stop game
+          docker rm game
+          docker run -d --name game -p 3000:3000 adityadho/tic-tac-toe-game:latest  
 
       - name: Update Kubeconfig
         run: aws eks --region ap-south-1 update-kubeconfig --name EKS_CLOUD
