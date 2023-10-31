@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Initialize terraform
-        working-directory: /home/ubuntu/
+        working-directory: /home/ubuntu/tic-tac-toe-game/Eks-terraform
         run: terraform init
 
       - name: Plan Terraform
