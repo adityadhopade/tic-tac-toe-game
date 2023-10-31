@@ -5,33 +5,8 @@ on:
     branches:
       - main
 
-jobs:
-  terraform-build:
-    name: Terraform initialization
-    runs-on: [eks-github-actions]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: setup terraform
-        id: setup-tf
-        uses: hashicorp/setup-terraform@v2  
-
-      - name: Initialize terraform
-        working-directory: /home/ubuntu/tic-tac-toe-game/Eks-terraform
-        run: |
-          current_directory=$(pwd)
-          echo "Current directory is: $current_directory"
-          terraform init
-
-      - name: Plan Terraform
-        run: terraform plan
-
-      - name: Apply Infrastructure 
-        run: terraform apply --auto-approve
-        
+jobs:        
   build:
-    needs: [terraform-build]
     name: Build
     runs-on: [eks-github-actions]
     steps:
