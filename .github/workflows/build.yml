@@ -48,3 +48,16 @@ jobs:
         
       - name: Scanning image using Trivy
         run: trivy image adityadho/tic-tac-toe-game:latest > trivy_image_scan_report.txt
+
+  deploy:
+    needs: build
+    runs-on: [eks-github-actions]
+    steps:
+      - name: Pull docker images
+        run: docker pull adityadho/tic-tac-toe-game:latest
+      
+      - name: Scan image using Trivy
+        run: trivy image adityadho/tic-tac-toe-game:latest > trivy_pull_image_scan.txt
+
+      - name: Deploy to container
+        run: docker run -d --name game -p 3000:3000 adityadho/tic-tac-toe-game:latest  
