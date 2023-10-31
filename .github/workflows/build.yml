@@ -27,3 +27,21 @@ jobs:
       
       - name: Scan file using Trivy
         run: trivy fs . > trivy_suggestions.txt
+
+      - name: Docker Build image
+        run: |
+          docker build -t tic-tac-toe-game .
+          docker tag adityadho/tic-tac-toe-game:latest
+          
+        env:
+          DOCKER_CLI_ACI: 1  
+
+      - name: Login to DockeHub
+        uses: docker/login-action@v3
+        
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      - name: Push Image to DockerHub
+        run: docker push adityadho/tic-tac-toe-game:latest
