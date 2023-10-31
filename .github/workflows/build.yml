@@ -94,6 +94,9 @@ jobs:
       - name: Destroy K8 Cluster
         run: | 
           kubectl delete -f deployment-service.yml
+          echo pwd
+          echo pwd
+          echo pwd
 
       # - name: Destroy Terraform build
       #   run: |
