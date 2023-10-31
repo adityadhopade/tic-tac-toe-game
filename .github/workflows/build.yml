@@ -93,7 +93,16 @@ jobs:
             kubectl delete deployment tic-tac-toe
             echo "Existing deployment removed"
           fi
-          kubectl apply -f deployment-service.yml  
+
+
+          # Delete the existing service if it exists
+          if kubectl get service tic-tac-toe-service &>/dev/null; then
+            kubectl delete service tic-tac-toe-service
+            echo "Existing service removed"
+          fi
+
+          kubectl apply -f deployment-service.yml 
+
           current_directory=$(pwd)
           echo "Current directory is: $current_directory"
 
@@ -118,6 +127,7 @@ jobs:
           echo "Current directory is: $current_directory"
 
       - name: Destroy Terraform build
+        working-directory: /home/ubuntu/tic-tac-toe-game/Eks-terraform
         run: |
           terraform destroy --auto-approve
 
