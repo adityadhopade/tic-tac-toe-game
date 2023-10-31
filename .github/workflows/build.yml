@@ -51,6 +51,7 @@ jobs:
 
   deploy:
     needs: build
+    timeout-minutes: 10
     runs-on: [eks-github-actions]
     steps:
       - name: Pull docker images
@@ -61,7 +62,6 @@ jobs:
 
       - name: Deploy to container
         run: docker run -d --name game -p 3000:3000 adityadho/tic-tac-toe-game:latest  
-
 
       - name: Update Kubeconfig
         run: aws eks --region ap-south-1 update-kubeconfig --name EKS_CLOUD
@@ -79,3 +79,20 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOKS_URL }}
   
+  destroy: 
+    needs: [build, deploy]
+    runs-on: [eks-github-actions]
+    steps:
+      - name: Destroy the Containers
+        run: |
+          docker stop game
+          docker rm game
+
+      - name: Destroy K8 Cluster
+        run: | 
+          kubectl delete -f deployment-service.yml
+
+      # - name: Destroy Terraform build
+      #   run: |
+      #     terraform destroy --auto-approve
+
