@@ -47,5 +47,4 @@ jobs:
         run: docker push adityadho/tic-tac-toe-game:latest
         
       - name: Scanning image using Trivy
-        run: trivy image adityadho/tic-tac-toe:latest > trivy_image_scan_report.txt
-        
+        run: trivy image adityadho/tic-tac-toe-game:latest > trivy_image_scan_report.txt
